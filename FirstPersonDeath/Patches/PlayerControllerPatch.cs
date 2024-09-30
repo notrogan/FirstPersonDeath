@@ -24,9 +24,8 @@ namespace FirstPersonDeath.Patches
         public static GameObject CameraHolder;
         public static GameObject SpectateCamera;
 
-        public static string PlayerUsername;
-
         public static int ClientId;
+        public static string PlayerUsername;
 
         //[HarmonyPatch(typeof(PlayerControllerB), "KillPlayer"]
         [HarmonyPatch("Update")]
@@ -51,19 +50,19 @@ namespace FirstPersonDeath.Patches
                 {
                     DeadMesh = UnityEngine.Object.FindObjectsOfType<DeadBodyInfo>();
 
-                    foreach (DeadBodyInfo deadBody in DeadMesh)
+                    foreach (DeadBodyInfo DeadBodyInfo in DeadMesh)
                     {
-                        if (deadBody.playerObjectId == ClientId)
+                        if (DeadBodyInfo.playerObjectId == ClientId)
                         {
-                            bodyParts = deadBody.bodyParts;
+                            bodyParts = DeadBodyInfo.bodyParts;
 
                             //deadBody.GetComponent<SkinnedMeshRenderer>().enabled = false;
 
-                            foreach (Rigidbody body in bodyParts)
+                            foreach (Rigidbody Rigidbody in bodyParts)
                             {
-                                if (body.name == "spine.004")
+                                if (Rigidbody.name == "spine.004")
                                 {
-                                    CameraHolder = body.gameObject;
+                                    CameraHolder = Rigidbody.gameObject;
                                 }
                             }
 

@@ -31,6 +31,7 @@ namespace FirstPersonDeath
 
             harmony.PatchAll(typeof(FirstPersonDeathBase));
             harmony.PatchAll(typeof(KillPlayerPatch));
+            harmony.PatchAll(typeof(PlayerControllerPatch));
         }
     }
 }
