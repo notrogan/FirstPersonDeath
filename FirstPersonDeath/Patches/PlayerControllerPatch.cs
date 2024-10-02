@@ -1,6 +1,9 @@
-﻿using GameNetcodeStuff;
+﻿using BepInEx;
+using BepInEx.Configuration;
+using GameNetcodeStuff;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.Windows;
 
 namespace FirstPersonDeath.Patches
 {
@@ -69,8 +72,20 @@ namespace FirstPersonDeath.Patches
                             } 
                             else
                             {
+<<<<<<< Updated upstream
                                 HUDManager.Instance.spectatingPlayerText.text = "";
                                 StartOfRound.Instance.overrideSpectateCamera = true;
+=======
+                                if (KeyDownPatch.UsePlayerCamera == true)
+                                {
+                                    HUDManager.Instance.spectatingPlayerText.text = "";
+                                    StartOfRound.Instance.overrideSpectateCamera = true;
+                                }
+                                else
+                                {
+                                    StartOfRound.Instance.overrideSpectateCamera = false;
+                                }
+>>>>>>> Stashed changes
                             }
                         }
                     }
