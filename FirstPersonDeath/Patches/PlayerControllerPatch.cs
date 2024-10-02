@@ -72,10 +72,8 @@ namespace FirstPersonDeath.Patches
                             } 
                             else
                             {
-<<<<<<< Updated upstream
                                 HUDManager.Instance.spectatingPlayerText.text = "";
                                 StartOfRound.Instance.overrideSpectateCamera = true;
-=======
                                 if (KeyDownPatch.UsePlayerCamera == true)
                                 {
                                     HUDManager.Instance.spectatingPlayerText.text = "";
@@ -85,7 +83,6 @@ namespace FirstPersonDeath.Patches
                                 {
                                     StartOfRound.Instance.overrideSpectateCamera = false;
                                 }
->>>>>>> Stashed changes
                             }
                         }
                     }
