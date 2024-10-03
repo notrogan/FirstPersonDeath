@@ -15,11 +15,18 @@ namespace FirstPersonDeath.Patches
             List<CodeInstruction> list = instructions.ToList();
             for (int i = 0; i < list.Count - 1; i++)
             {
-                FirstPersonDeathBase.mls.LogInfo(list[i]);
-                if (list[i].opcode == OpCodes.Ldstr && (list[i].operand.ToString() == "Tell autopilot ship to leave early : [RMB] (Hold)" || list[i].operand.ToString() == "Voted for ship to leave early" || list[i].operand.ToString() == "Ship leaving in one hour"))
+                if (list[i].opcode == OpCodes.Ldstr && (list[i].operand.ToString() == "Tell autopilot ship to leave early : [RMB] (Hold)"))
                 {
                     list[i].operand = list[i].operand += $"\n\n\n\n\nSwitch Camera: [{FirstPersonDeathBase.SwapKey.Value}]"; ;
                     FirstPersonDeathBase.mls.LogInfo("Transpiler for HudManager executed successfully!");
+                }
+                else
+                {
+                    if (list[i].opcode == OpCodes.Ldstr && (list[i].operand.ToString() == "Voted for ship to leave early" || list[i].operand.ToString() == "Ship leaving in one hour"))
+                    {
+                        list[i].operand = list[i].operand += $"\n\n\n\n\n\nSwitch Camera: [{FirstPersonDeathBase.SwapKey.Value}]"; ;
+                        FirstPersonDeathBase.mls.LogInfo("Transpiler for HudManager executed successfully!");
+                    }
                 }
             }
             return list;
