@@ -1,13 +1,28 @@
-﻿using HarmonyLib;
+﻿using GameNetcodeStuff;
+using HarmonyLib;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Emit;
 
 namespace FirstPersonDeath.Patches
 {
-    [HarmonyPatch(typeof(HUDManager), "Update")]
     internal class HudManagerPatch
     {
-        private static void Postfix(HUDManager __instance)
+        [HarmonyPatch(typeof(HUDManager), "Update")]
+        [HarmonyTranspiler]
+        private static IEnumerable<CodeInstruction> DeathLendgthPatch(IEnumerable<CodeInstruction> instructions)
         {
-            __instance.holdButtonToEndGameEarlyText.text += $"\n\n\n\n\nSwitch Camera: [{FirstPersonDeathBase.SwapKey.Value}]";
+            List<CodeInstruction> list = instructions.ToList();
+            for (int i = 0; i < list.Count - 1; i++)
+            {
+                FirstPersonDeathBase.mls.LogInfo(list[i]);
+                if (list[i].opcode == OpCodes.Ldstr && (list[i].operand.ToString() == "Tell autopilot ship to leave early : [RMB] (Hold)" || list[i].operand.ToString() == "Voted for ship to leave early" || list[i].operand.ToString() == "Ship leaving in one hour"))
+                {
+                    list[i].operand = list[i].operand += $"\n\n\n\n\nSwitch Camera: [{FirstPersonDeathBase.SwapKey.Value}]"; ;
+                    FirstPersonDeathBase.mls.LogInfo("Transpiler for HudManager executed successfully!");
+                }
+            }
+            return list;
         }
     }
 }

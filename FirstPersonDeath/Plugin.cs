@@ -11,7 +11,7 @@ namespace FirstPersonDeath
     {
         private const string modGUID = "rogan.FirstPersonDeath";
         private const string modName = "First Person Death";
-        private const string modVersion = "1.1.4";
+        private const string modVersion = "1.1.5";
 
         private readonly Harmony harmony = new Harmony(modGUID);
 

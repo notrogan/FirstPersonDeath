@@ -11,11 +11,11 @@ namespace FirstPersonDeath.Patches
         public static PlayerControllerB NetworkController;
 
         public static GameObject MeshModel;
-        public static Rigidbody[] bodyParts;
+        public static Rigidbody[] BodyParts;
         public static DeadBodyInfo[] DeadMesh;
 
         public static GameObject MainCamera;
-        public static GameObject PivotCamera;
+        public static GameObject PivotCamera;   
         public static GameObject CameraHolder;
         public static GameObject SpectateCamera;
 
@@ -49,11 +49,11 @@ namespace FirstPersonDeath.Patches
                     {
                         if (DeadBodyInfo.playerObjectId == ClientId)
                         {
-                            bodyParts = DeadBodyInfo.bodyParts;
+                            BodyParts = DeadBodyInfo.bodyParts;
 
                             //deadBody.GetComponent<SkinnedMeshRenderer>().enabled = false;
 
-                            foreach (Rigidbody Rigidbody in bodyParts)
+                            foreach (Rigidbody Rigidbody in BodyParts)
                             {
                                 if (Rigidbody.name == "spine.004")
                                 {
