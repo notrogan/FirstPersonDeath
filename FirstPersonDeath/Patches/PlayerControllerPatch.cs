@@ -1,9 +1,6 @@
-﻿using BepInEx;
-using BepInEx.Configuration;
-using GameNetcodeStuff;
+﻿using GameNetcodeStuff;
 using HarmonyLib;
 using UnityEngine;
-using UnityEngine.Windows;
 
 namespace FirstPersonDeath.Patches
 {
