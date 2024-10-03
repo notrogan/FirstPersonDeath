@@ -10,7 +10,7 @@ namespace FirstPersonDeath.Patches
     {
         [HarmonyPatch(typeof(HUDManager), "Update")]
         [HarmonyTranspiler]
-        private static IEnumerable<CodeInstruction> DeathLendgthPatch(IEnumerable<CodeInstruction> instructions)
+        private static IEnumerable<CodeInstruction> EarlyVotePatch(IEnumerable<CodeInstruction> instructions)
         {
             List<CodeInstruction> list = instructions.ToList();
             for (int i = 0; i < list.Count - 1; i++)
