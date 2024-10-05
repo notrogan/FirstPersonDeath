@@ -20,19 +20,26 @@ namespace FirstPersonDeath.Patches
         public static GameObject SpectateCamera;
 
         public static int ClientId;
+        public static bool PlayerBody = true;
         public static string PlayerUsername;
+
+        //public static string[] DeathTypesUseSpectatorCamera = { "Suffocation" };
 
         //[HarmonyPatch(typeof(PlayerControllerB), "KillPlayer"]
         [HarmonyPatch("Update")]
         [HarmonyPostfix]
         public static void FirstPersonPatch()
         {
+            if (!PlayerBody)
+            {
+                return;
+            }
+
             if (GameNetworkManager.Instance.localPlayerController != null && GameNetworkManager.Instance.localPlayerController != null)
             {
                 RoundController = StartOfRound.Instance.localPlayerController;
                 NetworkController = GameNetworkManager.Instance.localPlayerController;
 
-                MainCamera = RoundController.gameplayCamera.gameObject;
                 PivotCamera = RoundController.spectateCameraPivot.gameObject;
                 SpectateCamera = StartOfRound.Instance.spectateCamera.gameObject;
 
@@ -43,53 +50,61 @@ namespace FirstPersonDeath.Patches
 
                 if (NetworkController.isPlayerDead)
                 {
-                    DeadMesh = UnityEngine.Object.FindObjectsOfType<DeadBodyInfo>();
-
-                    foreach (DeadBodyInfo DeadBodyInfo in DeadMesh)
+                    if (!CameraHolder)
                     {
-                        if (DeadBodyInfo.playerObjectId == ClientId)
+                        DeadMesh = UnityEngine.Object.FindObjectsOfType<DeadBodyInfo>();
+
+                        foreach (DeadBodyInfo DeadBodyInfo in DeadMesh)
                         {
-                            BodyParts = DeadBodyInfo.bodyParts;
-
-                            //deadBody.GetComponent<SkinnedMeshRenderer>().enabled = false;
-
-                            foreach (Rigidbody Rigidbody in BodyParts)
+                            if (DeadBodyInfo.playerObjectId == ClientId)
                             {
-                                if (Rigidbody.name == "spine.004")
-                                {
-                                    CameraHolder = Rigidbody.gameObject;
-                                }
-                            }
+                                BodyParts = DeadBodyInfo.bodyParts;
 
-                            if (StartOfRound.Instance.shipIsLeaving)
-                            {
-                                StartOfRound.Instance.overrideSpectateCamera = false;
-                                SpectateCamera.transform.parent = PivotCamera.transform;
-                                SpectateCamera.transform.position = PivotCamera.transform.position;
-                            } 
-                            else
-                            {
-                                HUDManager.Instance.spectatingPlayerText.text = "";
-                                StartOfRound.Instance.overrideSpectateCamera = true;
-                                if (KeyDownPatch.UsePlayerCamera == true)
+                                foreach (Rigidbody Rigidbody in BodyParts)
                                 {
-                                    HUDManager.Instance.spectatingPlayerText.text = "";
-                                    StartOfRound.Instance.overrideSpectateCamera = true;
-                                }
-                                else
-                                {
-                                    StartOfRound.Instance.overrideSpectateCamera = false;
+                                    if (Rigidbody.name == "spine.004")
+                                    {
+                                        CameraHolder = Rigidbody.gameObject;
+                                    }
                                 }
                             }
                         }
                     }
 
-                    if (!StartOfRound.Instance.shipIsLeaving)
+                    if (StartOfRound.Instance.shipIsLeaving)
                     {
-                        SpectateCamera.transform.position = CameraHolder.transform.position;
-                        SpectateCamera.transform.parent = CameraHolder.transform;
-                        SpectateCamera.transform.localPosition = new Vector3(0, 0, 0.2f);
-                        SpectateCamera.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        StartOfRound.Instance.overrideSpectateCamera = false;
+                        SpectateCamera.transform.parent = PivotCamera.transform;
+                        SpectateCamera.transform.position = PivotCamera.transform.position;
+                    }
+                    else
+                    {
+                        HUDManager.Instance.spectatingPlayerText.text = "";
+                        StartOfRound.Instance.overrideSpectateCamera = true;
+                        if (KeyDownPatch.UsePlayerCamera == true)
+                        {
+                            HUDManager.Instance.spectatingPlayerText.text = "";
+                            StartOfRound.Instance.overrideSpectateCamera = true;
+                        }
+                        else
+                        {
+                            StartOfRound.Instance.overrideSpectateCamera = false;
+
+                        }
+
+                        if (CameraHolder)
+                        {
+                            SpectateCamera.transform.position = CameraHolder.transform.position;
+                            SpectateCamera.transform.parent = CameraHolder.transform;
+                            SpectateCamera.transform.localPosition = new Vector3(0, 0, 0.2f);
+                            SpectateCamera.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        }
+                        else
+                        {
+                            StartOfRound.Instance.overrideSpectateCamera = false;
+                            PlayerBody = false;
+                            return;
+                        }
                     }
                 }
             }
