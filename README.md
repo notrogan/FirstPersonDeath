@@ -1,7 +1,7 @@
 ### Information
 On death, the mod re-enables the first person camera instead of using the spectator camera.
 
-In situations when the body is not recoverable (quicksand), the spectator camera will be used as the player prefab is despawned.
+In situations when the body is not recoverable, the spectator camera will be used as the player prefab is despawned.
 
 ### Configuration
 SwapKey:
