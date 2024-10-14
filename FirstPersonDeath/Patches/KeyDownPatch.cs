@@ -11,7 +11,7 @@ namespace FirstPersonDeath.Patches
         public static KeyCode SwapKeyCode = (KeyCode)System.Enum.Parse(typeof(KeyCode), FirstPersonDeathBase.SwapKey.Value);
         public static KeyboardShortcut SwapKey = new KeyboardShortcut(SwapKeyCode);
 
-        public static bool KeyDown = false;
+        public static bool SwapKeyDown = false;
         public static bool UsePlayerCamera = false;
 
         [HarmonyPatch("Update")]
@@ -22,15 +22,15 @@ namespace FirstPersonDeath.Patches
             {
                 if (SwapKey.IsDown())
                 {
-                    if (!KeyDown)
+                    if (!SwapKeyDown)
                     {
                         UsePlayerCamera = !UsePlayerCamera;
-                        KeyDown = true;
+                        SwapKeyDown = true;
                     }
                 }
                 else if (SwapKey.IsUp())
                 {
-                    KeyDown = false;
+                    SwapKeyDown = false;
                 }
             }
             else

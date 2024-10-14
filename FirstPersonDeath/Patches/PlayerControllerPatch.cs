@@ -1,6 +1,8 @@
 ﻿using GameNetcodeStuff;
 using HarmonyLib;
 using UnityEngine;
+using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace FirstPersonDeath.Patches
 {
@@ -20,10 +22,10 @@ namespace FirstPersonDeath.Patches
         public static GameObject SpectateCamera;
 
         public static int ClientId;
-        public static bool PlayerBody = true;
         public static string PlayerUsername;
 
-        //public static string[] DeathTypesUseSpectatorCamera = { "Suffocation" };
+        public static bool PlayerBody = true;
+        public static bool PlayerUnderwater = false;
 
         //[HarmonyPatch(typeof(PlayerControllerB), "KillPlayer"]
         [HarmonyPatch("Update")]
@@ -47,6 +49,11 @@ namespace FirstPersonDeath.Patches
                 ClientId = (int)NetworkController.playerClientId;
 
                 MeshModel = NetworkController.thisPlayerModel.gameObject;
+
+                if (!NetworkController.isPlayerDead)
+                {
+                    PlayerUnderwater = NetworkController.isUnderwater;
+                }
 
                 if (NetworkController.isPlayerDead)
                 {
@@ -83,11 +90,16 @@ namespace FirstPersonDeath.Patches
                         StartOfRound.Instance.overrideSpectateCamera = true;
                         if (KeyDownPatch.UsePlayerCamera == true)
                         {
+                            if (PlayerUnderwater)
+                            {
+                                HUDManager.Instance.setUnderwaterFilter = true;
+                            }
                             HUDManager.Instance.spectatingPlayerText.text = "";
                             StartOfRound.Instance.overrideSpectateCamera = true;
                         }
                         else
                         {
+                            HUDManager.Instance.setUnderwaterFilter = false;
                             StartOfRound.Instance.overrideSpectateCamera = false;
 
                         }
