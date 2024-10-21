@@ -20,6 +20,7 @@ namespace FirstPersonDeath.Patches
         public static GameObject PivotCamera;   
         public static GameObject CameraHolder;
         public static GameObject SpectateCamera;
+        public static AudioListener AudioListener;
 
         public static int ClientId;
         public static string PlayerUsername;
@@ -57,6 +58,11 @@ namespace FirstPersonDeath.Patches
 
                 if (NetworkController.isPlayerDead)
                 {
+                    if (!AudioListener)
+                    {
+                        AudioListener = GameObject.FindObjectOfType<AudioListener>();
+                    }
+
                     if (!CameraHolder)
                     {
                         DeadMesh = UnityEngine.Object.FindObjectsOfType<DeadBodyInfo>();
@@ -94,12 +100,16 @@ namespace FirstPersonDeath.Patches
                             }
                             HUDManager.Instance.spectatingPlayerText.text = "";
                             StartOfRound.Instance.overrideSpectateCamera = true;
+                            AudioListener.gameObject.transform.parent = SpectateCamera.transform;
+                            AudioListener.gameObject.transform.localPosition = new Vector3 (0, 0, 0);
                         }
                         else
                         {
+                            //set text back to default, probably need to look at script?
                             HUDManager.Instance.setUnderwaterFilter = false;
                             StartOfRound.Instance.overrideSpectateCamera = false;
-
+                            AudioListener.gameObject.transform.parent = PivotCamera.transform;
+                            AudioListener.gameObject.transform.localPosition = new Vector3(0, 0, 0);
                         }
 
                         if (CameraHolder)
