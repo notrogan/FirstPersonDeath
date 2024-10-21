@@ -19,7 +19,7 @@ namespace FirstPersonDeath.Patches
             {
                 if (list[i].opcode == OpCodes.Call && list[i].operand == AccessTools.Method(typeof(PlayerControllerB), "SpectateNextPlayer"))
                 {
-                    list.RemoveRange(0, i+1);
+                    //list.RemoveRange(0, i+1);
                     FirstPersonDeathBase.mls.LogInfo("Transpiler for PlayerControllerB executed successfully!");
                 }
                 //FirstPersonDeathBase.mls.LogInfo($"{list[i].opcode} - {list[i].operand}");

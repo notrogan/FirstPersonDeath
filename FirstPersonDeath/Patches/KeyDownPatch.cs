@@ -13,11 +13,18 @@ namespace FirstPersonDeath.Patches
 
         public static bool SwapKeyDown = false;
         public static bool UsePlayerCamera = false;
+        public static string LastSpectatedPlayer = "";
+
+        public static PlayerControllerB NetworkController;
 
         [HarmonyPatch("Update")]
         [HarmonyPostfix]
         private static void SwapPatch()
         {
+            //NetworkController = GameNetworkManager.Instance.localPlayerController;
+
+            //FirstPersonDeathBase.mls.LogInfo(LastSpectatedPlayer);
+
             if (GameNetworkManager.Instance.localPlayerController.isPlayerDead)
             {
                 if (SwapKey.IsDown())
@@ -30,6 +37,10 @@ namespace FirstPersonDeath.Patches
                 }
                 else if (SwapKey.IsUp())
                 {
+                    //if (LastSpectatedPlayer == "" || UsePlayerCamera == false)
+                    //{
+                    //    LastSpectatedPlayer = NetworkController.spectatedPlayerScript.playerUsername;
+                    //}
                     SwapKeyDown = false;
                 }
             }

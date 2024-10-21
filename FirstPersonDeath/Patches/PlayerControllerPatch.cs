@@ -24,6 +24,8 @@ namespace FirstPersonDeath.Patches
 
         public static int ClientId;
         public static string PlayerUsername;
+        public static string SpectatedPlayer;
+        public static PlayerControllerB[] AllPlayers;
 
         public static bool PlayerBody = true;
         public static bool PlayerUnderwater = false;
@@ -58,6 +60,21 @@ namespace FirstPersonDeath.Patches
 
                 if (NetworkController.isPlayerDead)
                 {
+                    SpectatedPlayer = NetworkController.spectatedPlayerScript.playerUsername;
+
+                    AllPlayers = StartOfRound.Instance.allPlayerScripts;
+
+                    if (SpectatedPlayer == PlayerUsername)
+                    {
+                        for (int i = 0; i < AllPlayers.Length; i++)
+                        {
+                            if (AllPlayers[i].playerUsername != PlayerUsername && !AllPlayers[i].playerUsername.Contains("Player #"))
+                            {
+                                NetworkController.spectatedPlayerScript = AllPlayers[i];
+                            }
+                        }
+                    }
+
                     if (!AudioListener)
                     {
                         AudioListener = GameObject.FindObjectOfType<AudioListener>();
@@ -86,6 +103,7 @@ namespace FirstPersonDeath.Patches
 
                     if (StartOfRound.Instance.shipIsLeaving)
                     {
+                        HUDManager.Instance.spectatingPlayerText.text = "";
                         StartOfRound.Instance.overrideSpectateCamera = false;
                         SpectateCamera.transform.parent = PivotCamera.transform;
                         SpectateCamera.transform.position = PivotCamera.transform.position;
@@ -105,7 +123,24 @@ namespace FirstPersonDeath.Patches
                         }
                         else
                         {
-                            //set text back to default, probably need to look at script?
+                            //if (KeyDownPatch.UpdateSpectateCamera == true)
+                            //{
+                            //    for (int i = 0; i < AllPlayers.Length; i++)
+                            //    {
+                            //        if (AllPlayers[i].playerUsername == SpectatedPlayer)
+                            //        {
+                            //            NetworkController.spectatedPlayerScript = AllPlayers[i - 1];
+                            //            break;
+                            //        }
+                            //    }
+                            //    KeyDownPatch.UpdateSpectateCamera = false;
+                            //}
+
+                            if (HUDManager.Instance.spectatingPlayerText.text == "")
+                            {
+                                HUDManager.Instance.spectatingPlayerText.text = $"(Spectating: {SpectatedPlayer})";
+                            }
+
                             HUDManager.Instance.setUnderwaterFilter = false;
                             StartOfRound.Instance.overrideSpectateCamera = false;
                             AudioListener.gameObject.transform.parent = PivotCamera.transform;
