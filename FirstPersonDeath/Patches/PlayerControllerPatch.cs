@@ -86,8 +86,6 @@ namespace FirstPersonDeath.Patches
                     }
                     else
                     {
-                        HUDManager.Instance.spectatingPlayerText.text = "";
-                        StartOfRound.Instance.overrideSpectateCamera = true;
                         if (KeyDownPatch.UsePlayerCamera == true)
                         {
                             if (PlayerUnderwater)
