@@ -38,7 +38,6 @@ namespace FirstPersonDeath
             harmony.PatchAll(typeof(KeyDownPatch));
             harmony.PatchAll(typeof(KillPlayerPatch));
             harmony.PatchAll(typeof(HudManagerPatch));
-            //harmony.PatchAll(typeof(SpectatePlayerPatch));
             harmony.PatchAll(typeof(PlayerControllerPatch));
         }
         private void LoadConfigs()

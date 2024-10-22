@@ -30,7 +30,6 @@ namespace FirstPersonDeath.Patches
         public static bool PlayerBody = true;
         public static bool PlayerUnderwater = false;
 
-        //[HarmonyPatch(typeof(PlayerControllerB), "KillPlayer"]
         [HarmonyPatch("Update")]
         [HarmonyPostfix]
         public static void FirstPersonPatch()
@@ -123,19 +122,6 @@ namespace FirstPersonDeath.Patches
                         }
                         else
                         {
-                            //if (KeyDownPatch.UpdateSpectateCamera == true)
-                            //{
-                            //    for (int i = 0; i < AllPlayers.Length; i++)
-                            //    {
-                            //        if (AllPlayers[i].playerUsername == SpectatedPlayer)
-                            //        {
-                            //            NetworkController.spectatedPlayerScript = AllPlayers[i - 1];
-                            //            break;
-                            //        }
-                            //    }
-                            //    KeyDownPatch.UpdateSpectateCamera = false;
-                            //}
-
                             if (HUDManager.Instance.spectatingPlayerText.text == "")
                             {
                                 HUDManager.Instance.spectatingPlayerText.text = $"(Spectating: {SpectatedPlayer})";
