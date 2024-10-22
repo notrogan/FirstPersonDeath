@@ -90,13 +90,12 @@ namespace FirstPersonDeath.Patches
                             {
                                 if (enemy.enemyType.enemyName == "MaskedPlayer")
                                 {
-                                    ClosestPlayer = enemy.GetClosestPlayer()
+                                    ClosestPlayer = enemy.GetClosestPlayer();
 
                                     if (ClosestPlayer.playerUsername == PlayerUsername)
                                     {
                                         CameraHolder = enemy.eye.gameObject;
                                     }
-
                                 }
                             }
                         }
