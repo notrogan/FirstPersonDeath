@@ -1,5 +1,6 @@
 ﻿using GameNetcodeStuff;
 using HarmonyLib;
+using System.Collections.Generic;
 using UnityEngine;
 using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 using static UnityEngine.Rendering.DebugUI;
@@ -25,7 +26,9 @@ namespace FirstPersonDeath.Patches
         public static int ClientId;
         public static string PlayerUsername;
         public static string SpectatedPlayer;
+        public static List<EnemyAI> SpawnedEnemies;
         public static PlayerControllerB[] AllPlayers;
+        public static PlayerControllerB ClosestPlayer;
 
         public static bool PlayerBody = true;
         public static bool PlayerUnderwater = false;
@@ -81,19 +84,37 @@ namespace FirstPersonDeath.Patches
 
                     if (!CameraHolder)
                     {
-                        DeadMesh = UnityEngine.Object.FindObjectsOfType<DeadBodyInfo>();
-
-                        foreach (DeadBodyInfo DeadBodyInfo in DeadMesh)
+                        if (NetworkController.causeOfDeath == CauseOfDeath.Strangulation)
                         {
-                            if (DeadBodyInfo.playerObjectId == ClientId)
+                            foreach (EnemyAI enemy in RoundManager.Instance.SpawnedEnemies)
                             {
-                                BodyParts = DeadBodyInfo.bodyParts;
-
-                                foreach (Rigidbody Rigidbody in BodyParts)
+                                if (enemy.enemyType.enemyName == "MaskedPlayer")
                                 {
-                                    if (Rigidbody.name == "spine.004")
+                                    ClosestPlayer = enemy.GetClosestPlayer()
+                                }
+
+                                if (ClosestPlayer.playerUsername == PlayerUsername)
+                                {
+                                    CameraHolder = enemy.eye.gameObject;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            DeadMesh = UnityEngine.Object.FindObjectsOfType<DeadBodyInfo>();
+
+                            foreach (DeadBodyInfo DeadBodyInfo in DeadMesh)
+                            {
+                                if (DeadBodyInfo.playerObjectId == ClientId)
+                                {
+                                    BodyParts = DeadBodyInfo.bodyParts;
+
+                                    foreach (Rigidbody Rigidbody in BodyParts)
                                     {
-                                        CameraHolder = Rigidbody.gameObject;
+                                        if (Rigidbody.name == "spine.004")
+                                        {
+                                            CameraHolder = Rigidbody.gameObject;
+                                        }
                                     }
                                 }
                             }
