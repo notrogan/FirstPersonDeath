@@ -84,6 +84,7 @@
     <Compile Include="Patches\KeyDownPatch.cs" />
     <Compile Include="Patches\KillPlayerPatch.cs" />
     <Compile Include="Patches\HudManagerPatch.cs" />
+    <Compile Include="Patches\MaskedPlayerPatch.cs" />
     <Compile Include="Patches\PlayerControllerPatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

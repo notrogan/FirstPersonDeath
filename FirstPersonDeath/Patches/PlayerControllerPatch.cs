@@ -17,7 +17,6 @@ namespace FirstPersonDeath.Patches
         public static Rigidbody[] BodyParts;
         public static DeadBodyInfo[] DeadMesh;
 
-        public static GameObject MainCamera;
         public static GameObject PivotCamera;   
         public static GameObject CameraHolder;
         public static GameObject SpectateCamera;
@@ -26,7 +25,6 @@ namespace FirstPersonDeath.Patches
         public static int ClientId;
         public static string PlayerUsername;
         public static string SpectatedPlayer;
-        public static List<EnemyAI> SpawnedEnemies;
         public static PlayerControllerB[] AllPlayers;
         public static PlayerControllerB ClosestPlayer;
 
@@ -37,7 +35,7 @@ namespace FirstPersonDeath.Patches
         [HarmonyPostfix]
         public static void FirstPersonPatch()
         {
-            if (!PlayerBody)
+            if (!PlayerBody && NetworkController.causeOfDeath != CauseOfDeath.Strangulation)
             {
                 return;
             }
@@ -86,18 +84,7 @@ namespace FirstPersonDeath.Patches
                     {
                         if (NetworkController.causeOfDeath == CauseOfDeath.Strangulation)
                         {
-                            foreach (EnemyAI enemy in RoundManager.Instance.SpawnedEnemies)
-                            {
-                                if (enemy.enemyType.enemyName == "MaskedPlayer")
-                                {
-                                    ClosestPlayer = enemy.GetClosestPlayer();
-
-                                    if (ClosestPlayer.playerUsername == PlayerUsername)
-                                    {
-                                        CameraHolder = enemy.eye.gameObject;
-                                    }
-                                }
-                            }
+                            CameraHolder = MaskedPlayerPatch.MaskedTransform.gameObject;
                         }
                         else
                         {
