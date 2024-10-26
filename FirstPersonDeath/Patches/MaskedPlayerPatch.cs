@@ -1,8 +1,5 @@
 ﻿using GameNetcodeStuff;
 using HarmonyLib;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
 using UnityEngine;
 
 namespace FirstPersonDeath.Patches
@@ -14,7 +11,7 @@ namespace FirstPersonDeath.Patches
 
         [HarmonyPatch("Update")]
         [HarmonyPostfix]
-        static void GetPlay2erPatch(ref PlayerControllerB ___mimickingPlayer, Transform ___headTiltTarget)
+        static void GetMaskedPatch(ref PlayerControllerB ___mimickingPlayer, Transform ___headTiltTarget)
         {
             if (___mimickingPlayer)
             {
@@ -22,11 +19,6 @@ namespace FirstPersonDeath.Patches
                 {
                     MaskedTransform = ___headTiltTarget;
                 }
-                //Component[] components = ___headTiltTarget.gameObject.GetComponentsInChildren<Component>(true);
-                //foreach (var component in components)
-                //{
-                //    FirstPersonDeathBase.mls.LogInfo(component.ToString());
-                //}
             }
         }
     }
