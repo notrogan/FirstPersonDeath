@@ -81,9 +81,29 @@ namespace FirstPersonDeath.Patches
                     {
                         if (NetworkController.causeOfDeath == CauseOfDeath.Strangulation)
                         {
-                            if (MaskedPlayerPatch.MaskedTransform.gameObject)
+                            if (MaskedPlayerPatch.MaskedTransform)
                             {
                                 CameraHolder = MaskedPlayerPatch.MaskedTransform.gameObject;
+                            }
+                            else
+                            {
+                                DeadMesh = UnityEngine.Object.FindObjectsOfType<DeadBodyInfo>();
+
+                                foreach (DeadBodyInfo DeadBodyInfo in DeadMesh)
+                                {
+                                    if (DeadBodyInfo.playerObjectId == ClientId)
+                                    {
+                                        BodyParts = DeadBodyInfo.bodyParts;
+
+                                        foreach (Rigidbody Rigidbody in BodyParts)
+                                        {
+                                            if (Rigidbody.name == "spine.004")
+                                            {
+                                                CameraHolder = Rigidbody.gameObject;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                         else
@@ -119,7 +139,7 @@ namespace FirstPersonDeath.Patches
                     {
                         if (KeyDownPatch.UsePlayerCamera == true)
                         {
-                            if (NetworkController.causeOfDeath == CauseOfDeath.Strangulation)
+                            if (MaskedPlayerPatch.MaskedTransform)
                             {
                                 MeshRenderer[] meshRenderers = MaskedPlayerPatch.MaskedTransform.root.gameObject.GetComponentsInChildren<MeshRenderer>();
 
@@ -150,18 +170,21 @@ namespace FirstPersonDeath.Patches
                         {
                             if (NetworkController.causeOfDeath == CauseOfDeath.Strangulation)
                             {
-                                MeshRenderer[] meshRenderers = MaskedPlayerPatch.MaskedTransform.root.gameObject.GetComponentsInChildren<MeshRenderer>();
-
-                                foreach (MeshRenderer renderer in meshRenderers)
+                                if (MaskedPlayerPatch.MaskedTransform)
                                 {
-                                    renderer.enabled = true;
-                                }
+                                    MeshRenderer[] meshRenderers = MaskedPlayerPatch.MaskedTransform.root.gameObject.GetComponentsInChildren<MeshRenderer>();
 
-                                SkinnedMeshRenderer[] skinnedMeshRenderers = MaskedPlayerPatch.MaskedTransform.root.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+                                    foreach (MeshRenderer renderer in meshRenderers)
+                                    {
+                                        renderer.enabled = true;
+                                    }
 
-                                foreach (SkinnedMeshRenderer renderer in skinnedMeshRenderers)
-                                {
-                                    renderer.enabled = true;
+                                    SkinnedMeshRenderer[] skinnedMeshRenderers = MaskedPlayerPatch.MaskedTransform.root.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+                                    foreach (SkinnedMeshRenderer renderer in skinnedMeshRenderers)
+                                    {
+                                        renderer.enabled = true;
+                                    }
                                 }
                             }
 
