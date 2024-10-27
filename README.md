@@ -25,6 +25,7 @@ Enemies:
 - Eyeless Dog: Supported
 - Gravity: Supported
 - Masked: Supported
+- Nutcracker: Supported
 - Slime: Supported
 - Snare Flea: Supported
 - Thumper: Supported
@@ -35,4 +36,3 @@ Enemies:
 - Jester: Untested
 - Old Bird: Untested
 - Maneater: Untested
-- Nutcracker: Untested
