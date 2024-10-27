@@ -8,6 +8,28 @@ SwapKey:
 - Used to switch between perspectives, default bind is E
 
 ### Compatibility
+
+Enemies:
+- Gravity: Supported
+- Drowning: Supported
+- Masked: Supported
+- Turret: Supported
+- Snare Flea: Supported
+- Eyeless Dog: Supported
+- Bracken: Supported
+- Coilhead: Not Working
+- Baboon Hawk: Untested
+- Giant: Untested
+- Barber: Untested
+- Spider: Untested
+- Bees: Untested
+- Slime: Untested
+- Jester: Untested
+- Old Bird: Untested
+- Maneater: Untested
+- Nutcracker: Untested
+- Thumper: Untested
+
 Supported Game Versions:
  - v64+: Supported
  - v60-v62: Untested
