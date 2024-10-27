@@ -21,6 +21,7 @@ Enemies:
 - Bracken: Supported
 - Bunker Spider: Supported
 - Circuit Bees: Supported
+- Coilhead: Kinda Supported
 - Drowning: Supported
 - Eyeless Dog: Supported
 - Gravity: Supported
@@ -30,7 +31,6 @@ Enemies:
 - Snare Flea: Supported
 - Thumper: Supported
 - Turret: Supported
-- Coilhead: Not Working
 - Giant: Untested
 - Butler: Untested
 - Jester: Untested
