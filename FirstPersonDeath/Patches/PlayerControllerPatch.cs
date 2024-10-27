@@ -79,6 +79,8 @@ namespace FirstPersonDeath.Patches
 
                     if (!CameraHolder)
                     {
+                                                    FirstPersonDeathBase.mls.LogInfo("Player dead! >.<");
+
                         if (NetworkController.causeOfDeath == CauseOfDeath.Strangulation)
                         {
                             if (MaskedPlayerPatch.MaskedTransform)
@@ -119,6 +121,10 @@ namespace FirstPersonDeath.Patches
                                     foreach (Rigidbody Rigidbody in BodyParts)
                                     {
                                         if (Rigidbody.name == "spine.004")
+                                        {
+                                            CameraHolder = Rigidbody.gameObject;
+                                        }
+                                        else if (Rigidbody.name == "PlayerRagdollSpring Variant(Clone)")
                                         {
                                             CameraHolder = Rigidbody.gameObject;
                                         }
