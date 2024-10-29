@@ -1,5 +1,6 @@
 ﻿using GameNetcodeStuff;
 using HarmonyLib;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FirstPersonDeath.Patches
@@ -27,6 +28,7 @@ namespace FirstPersonDeath.Patches
 
         public static bool PlayerBody = true;
         public static bool PlayerUnderwater = false;
+        public static bool PlayerDecapitated = false;
 
         [HarmonyPatch("Update")]
         [HarmonyPostfix]
@@ -79,7 +81,7 @@ namespace FirstPersonDeath.Patches
 
                     if (!CameraHolder)
                     {
-                                                    FirstPersonDeathBase.mls.LogInfo("Player dead! >.<");
+                        FirstPersonDeathBase.mls.LogInfo("Player dead! >.<");
 
                         if (NetworkController.causeOfDeath == CauseOfDeath.Strangulation)
                         {
@@ -120,13 +122,21 @@ namespace FirstPersonDeath.Patches
 
                                     foreach (Rigidbody Rigidbody in BodyParts)
                                     {
+                                        FirstPersonDeathBase.mls.LogInfo(Rigidbody.name);
+
                                         if (Rigidbody.name == "spine.004")
                                         {
                                             CameraHolder = Rigidbody.gameObject;
                                         }
-                                        else if (Rigidbody.name == "PlayerRagdollSpring Variant(Clone)")
+                                    }
+
+                                    if (!CameraHolder)
+                                    {
+                                        if (DeadBodyInfo.detachedHeadObject != null)
                                         {
-                                            CameraHolder = Rigidbody.gameObject;
+                                            PlayerDecapitated = true;
+                                            CameraHolder = DeadBodyInfo.detachedHeadObject.gameObject;
+                                            FirstPersonDeathBase.mls.LogInfo("Player died to coilhead! >.<");
                                         }
                                     }
                                 }
@@ -136,6 +146,7 @@ namespace FirstPersonDeath.Patches
 
                     if (StartOfRound.Instance.shipIsLeaving)
                     {
+                        PlayerDecapitated = false;
                         HUDManager.Instance.spectatingPlayerText.text = "";
                         StartOfRound.Instance.overrideSpectateCamera = false;
                         SpectateCamera.transform.parent = PivotCamera.transform;
@@ -214,7 +225,15 @@ namespace FirstPersonDeath.Patches
 
                             SpectateCamera.transform.parent = CameraHolder.transform;
                             SpectateCamera.transform.localPosition = new Vector3(0, 0, 0.2f);
-                            SpectateCamera.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+                            if (!PlayerDecapitated)
+                            {
+                                SpectateCamera.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                            }
+                            else
+                            {
+                                SpectateCamera.transform.localRotation = Quaternion.Euler(90, 0, 0);
+                            }
                         }
                         else
                         {
