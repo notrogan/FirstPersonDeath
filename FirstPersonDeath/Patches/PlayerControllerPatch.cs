@@ -127,8 +127,6 @@ namespace FirstPersonDeath.Patches
 
                                     foreach (Rigidbody Rigidbody in BodyParts)
                                     {
-                                        FirstPersonDeathBase.mls.LogInfo(Rigidbody.name);
-
                                         if (Rigidbody.name == "spine.004")
                                         {
                                             FirstPersonDeathBase.mls.LogInfo("Found player head! :D");
