@@ -15,24 +15,5 @@ Supported Game Versions:
  - v50-v56: Untested
  - v45-v49: Untested
 
-Enemies:
-- Baboon Hawk: Supported
-- Barber: Supported
-- Bracken: Supported
-- Bunker Spider: Supported
-- Circuit Bees: Supported
-- Coilhead: Kinda Supported
-- Drowning: Supported
-- Eyeless Dog: Supported
-- Gravity: Supported
-- Masked: Supported
-- Nutcracker: Supported
-- Slime: Supported
-- Snare Flea: Supported
-- Thumper: Supported
-- Turret: Supported
-- Giant: Untested
-- Butler: Untested
-- Jester: Untested
-- Old Bird: Untested
-- Maneater: Untested
+### Support
+GitHub issues are probably sufficient but you can contact me on discord @notrogan too
