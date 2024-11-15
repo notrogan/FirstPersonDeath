@@ -23,7 +23,6 @@ namespace FirstPersonDeath.Patches
         public static string PlayerUsername;
         public static string SpectatedPlayer;
         public static PlayerControllerB[] AllPlayers;
-        public static PlayerControllerB ClosestPlayer;
 
         public static bool PlayerBody = true;
         public static bool PlayerUnderwater = false;

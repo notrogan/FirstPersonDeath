@@ -15,8 +15,6 @@ namespace FirstPersonDeath.Patches
         public static bool UsePlayerCamera = false;
         public static string LastSpectatedPlayer = "";
 
-        public static PlayerControllerB NetworkController;
-
         [HarmonyPatch("Update")]
         [HarmonyPostfix]
         private static void SwapPatch()
