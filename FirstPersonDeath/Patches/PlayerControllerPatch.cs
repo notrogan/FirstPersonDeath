@@ -58,7 +58,10 @@ namespace FirstPersonDeath.Patches
 
                 if (NetworkController.isPlayerDead)
                 {
-                    SpectatedPlayer = NetworkController.spectatedPlayerScript.playerUsername;
+                    if (NetworkController.spectatedPlayerScript)
+                    {
+                        SpectatedPlayer = NetworkController.spectatedPlayerScript.playerUsername;
+                    }
 
                     AllPlayers = StartOfRound.Instance.allPlayerScripts;
 
@@ -80,7 +83,10 @@ namespace FirstPersonDeath.Patches
 
                     if (!CameraHolder)
                     {
-                        FirstPersonDeathBase.mls.LogInfo("Player dead! >.<");
+                        if (DeadMesh == null)
+                        {
+                            FirstPersonDeathBase.mls.LogInfo("Player dead! >.<");
+                        }
 
                         if (NetworkController.causeOfDeath == CauseOfDeath.Strangulation)
                         {
@@ -102,6 +108,7 @@ namespace FirstPersonDeath.Patches
                                         {
                                             if (Rigidbody.name == "spine.004")
                                             {
+                                                FirstPersonDeathBase.mls.LogInfo("Found player head! :D");
                                                 CameraHolder = Rigidbody.gameObject;
                                             }
                                         }
@@ -125,6 +132,7 @@ namespace FirstPersonDeath.Patches
 
                                         if (Rigidbody.name == "spine.004")
                                         {
+                                            FirstPersonDeathBase.mls.LogInfo("Found player head! :D");
                                             CameraHolder = Rigidbody.gameObject;
                                         }
                                     }
@@ -184,6 +192,11 @@ namespace FirstPersonDeath.Patches
                         }
                         else
                         {
+                            if (StartOfRound.Instance.allPlayerScripts.Length != 1)
+                            {
+                                return;
+                            }
+
                             if (NetworkController.causeOfDeath == CauseOfDeath.Strangulation)
                             {
                                 if (MaskedPlayerPatch.MaskedTransform)
