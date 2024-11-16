@@ -1,5 +1,6 @@
 ﻿using GameNetcodeStuff;
 using HarmonyLib;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FirstPersonDeath.Patches
@@ -27,6 +28,8 @@ namespace FirstPersonDeath.Patches
         public static bool PlayerBody = true;
         public static bool PlayerUnderwater = false;
         public static bool PlayerDecapitated = false;
+
+        public static List<string> PlayerNames = new List<string>();
 
         [HarmonyPatch("Update")]
         [HarmonyPostfix]
@@ -150,10 +153,20 @@ namespace FirstPersonDeath.Patches
 
                     if (StartOfRound.Instance.shipIsLeaving)
                     {
+                        PlayerNames.Clear();
                         PlayerDecapitated = false;
-                        NetworkController.spectatedPlayerScript = null;
+
+                        if (StartOfRound.Instance.allPlayersDead)
+                        {
+                            NetworkController.spectatedPlayerScript = null;
+                            HUDManager.Instance.spectatingPlayerText.text = "";
+                        }
+                        else
+                        {
+                            HUDManager.Instance.spectatingPlayerText.text = $"(Spectating: {SpectatedPlayer})";
+                        }
+
                         HUDManager.Instance.setUnderwaterFilter = false;
-                        HUDManager.Instance.spectatingPlayerText.text = "";
                         StartOfRound.Instance.overrideSpectateCamera = false;
                         SpectateCamera.transform.parent = PivotCamera.transform;
                         SpectateCamera.transform.position = PivotCamera.transform.position;
@@ -191,7 +204,15 @@ namespace FirstPersonDeath.Patches
                         }
                         else
                         {
-                            if (StartOfRound.Instance.allPlayerScripts.Length != 1)
+                            foreach (var script in StartOfRound.Instance.allPlayerScripts)
+                            {
+                                if (!script.playerUsername.Contains("Player #") && !PlayerNames.Contains(script.playerUsername))
+                                {
+                                    PlayerNames.Add(script.playerUsername);
+                                }
+                            }
+
+                            if (PlayerNames.Count == 1)
                             {
                                 return;
                             }
