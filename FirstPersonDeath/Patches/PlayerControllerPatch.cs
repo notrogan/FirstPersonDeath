@@ -151,6 +151,8 @@ namespace FirstPersonDeath.Patches
                     if (StartOfRound.Instance.shipIsLeaving)
                     {
                         PlayerDecapitated = false;
+                        NetworkController.spectatedPlayerScript = null;
+                        HUDManager.Instance.setUnderwaterFilter = false;
                         HUDManager.Instance.spectatingPlayerText.text = "";
                         StartOfRound.Instance.overrideSpectateCamera = false;
                         SpectateCamera.transform.parent = PivotCamera.transform;
