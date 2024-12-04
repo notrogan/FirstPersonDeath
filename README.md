@@ -15,7 +15,7 @@ Supported Game Versions:
  - v50-v56: Untested
  - v45-v49: Untested
 
-Incompatible Mods:
+Unsupported Mods:
 - QuickerVote
 - Poltergeist
 
