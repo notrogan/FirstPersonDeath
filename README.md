@@ -21,5 +21,5 @@ Incompatible Mods:
 - QuickerVote
 
 ### Support
-GitHub Issues
-Discord @notrogan
+- GitHub Issues
+- Discord @notrogan
