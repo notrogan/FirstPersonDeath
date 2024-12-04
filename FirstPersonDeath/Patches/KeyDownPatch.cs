@@ -26,7 +26,6 @@ namespace FirstPersonDeath.Patches
                     if (!SwapKeyDown)
                     {
                         UsePlayerCamera = !UsePlayerCamera;
-                        PlayerControllerPatch.SentDebug = false;
                         SwapKeyDown = true;
                     }
                 }
