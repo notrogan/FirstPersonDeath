@@ -15,5 +15,11 @@ Supported Game Versions:
  - v50-v56: Untested
  - v45-v49: Untested
 
+### Incompatibility
+
+Incompatible Mods:
+- QuickerVote
+
 ### Support
-GitHub issues are probably sufficient but you can contact me on discord @notrogan too
+GitHub Issues
+Discord @notrogan
