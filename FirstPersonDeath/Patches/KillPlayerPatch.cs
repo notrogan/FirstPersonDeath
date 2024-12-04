@@ -18,7 +18,7 @@ namespace FirstPersonDeath.Patches
                 if (list[i].opcode == OpCodes.Ldc_R4 && list[i].operand.ToString() == "1.5")
                 {
                     list[i].operand = 0.0f;
-                    FirstPersonDeathBase.mls.LogInfo("Transpiler for PlayerControllerB executed successfully!");
+                    FirstPersonDeathBase.mls.LogInfo("Patched death camera time!");
                 }
             }
             return list;

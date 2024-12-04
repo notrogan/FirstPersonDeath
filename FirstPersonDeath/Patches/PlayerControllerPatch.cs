@@ -29,6 +29,8 @@ namespace FirstPersonDeath.Patches
         public static bool PlayerUnderwater = false;
         public static bool PlayerDecapitated = false;
 
+        public static bool SentDebug = false;
+
         public static List<string> PlayerNames = new List<string>();
 
         [HarmonyPatch("Update")]
@@ -208,12 +210,24 @@ namespace FirstPersonDeath.Patches
                             {
                                 if (!script.playerUsername.Contains("Player #") && !PlayerNames.Contains(script.playerUsername))
                                 {
+                                    FirstPersonDeathBase.mls.LogInfo($"Added {script.playerUsername} to PlayerNames!");
                                     PlayerNames.Add(script.playerUsername);
                                 }
                             }
 
+                            if (SentDebug == false)
+                            {
+                                FirstPersonDeathBase.mls.LogInfo($"Found {PlayerNames.Count} player(s)!");
+                            }
+
                             if (PlayerNames.Count == 1)
                             {
+                                if (SentDebug == false)
+                                {
+                                    FirstPersonDeathBase.mls.LogInfo($"Only one player, locking camera!");
+                                    SentDebug = true;
+                                }
+
                                 return;
                             }
 

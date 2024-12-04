@@ -17,7 +17,7 @@ namespace FirstPersonDeath.Patches
                 if (list[i].opcode == OpCodes.Ldstr && (list[i].operand.ToString() == "Tell autopilot ship to leave early : [RMB] (Hold)"))
                 {
                     list[i].operand = list[i].operand += $"\n\n\n\n\nSwitch Camera: [{FirstPersonDeathBase.SwapKey.Value}]"; ;
-                    FirstPersonDeathBase.mls.LogInfo("Transpiler for HudManager executed successfully!");
+                    FirstPersonDeathBase.mls.LogInfo("Patched vote leave text!");
                 }
                 else
                 {
