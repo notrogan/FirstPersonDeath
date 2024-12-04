@@ -19,6 +19,7 @@ Supported Game Versions:
 
 Incompatible Mods:
 - QuickerVote
+- Poltergeist
 
 ### Support
 - GitHub Issues
