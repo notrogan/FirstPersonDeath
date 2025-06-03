@@ -10,7 +10,8 @@ SwapKey:
 ### Compatibility
 
 Supported Game Versions:
- - v64+: Supported
+ - v70+: Supported (somewhat)
+ - v64-v67: Supported
  - v60-v62: Untested
  - v50-v56: Untested
  - v45-v49: Untested
@@ -21,4 +22,3 @@ Unsupported Mods:
 
 ### Support
 - GitHub Issues
-- Discord @notrogan
