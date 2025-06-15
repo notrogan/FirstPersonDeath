@@ -87,7 +87,7 @@ namespace FirstPersonDeath.Patches
                     {
                         if (DeadMesh == null)
                         {
-                            FirstPersonDeathBase.mls.LogInfo("Player dead! >.<");
+                            FirstPersonDeathBase.mls.LogInfo($"{PlayerUsername} died!");
                         }
 
                         if (NetworkController.causeOfDeath == CauseOfDeath.Strangulation)
@@ -110,7 +110,7 @@ namespace FirstPersonDeath.Patches
                                         {
                                             if (Rigidbody.name == "spine.004")
                                             {
-                                                FirstPersonDeathBase.mls.LogInfo("Found player head! :D");
+                                                FirstPersonDeathBase.mls.LogInfo($"Found head node of {DeadBodyInfo.name}!");
                                                 CameraHolder = Rigidbody.gameObject;
                                             }
                                         }
@@ -132,7 +132,7 @@ namespace FirstPersonDeath.Patches
                                     {
                                         if (Rigidbody.name == "spine.004")
                                         {
-                                            FirstPersonDeathBase.mls.LogInfo("Found player head! :D");
+                                            FirstPersonDeathBase.mls.LogInfo($"Found head node of {DeadBodyInfo.name}!");
                                             CameraHolder = Rigidbody.gameObject;
                                         }
                                     }
@@ -143,7 +143,7 @@ namespace FirstPersonDeath.Patches
                                         {
                                             PlayerDecapitated = true;
                                             CameraHolder = DeadBodyInfo.detachedHeadObject.gameObject;
-                                            FirstPersonDeathBase.mls.LogInfo("Player died to coilhead! >.<");
+                                            FirstPersonDeathBase.mls.LogInfo($"{DeadBodyInfo.name} was killed by coilhead!");
                                         }
                                     }
                                 }
@@ -153,6 +153,9 @@ namespace FirstPersonDeath.Patches
 
                     if (StartOfRound.Instance.shipIsLeaving)
                     {
+                        //TODO - THESE LOGS ALL CALL 100000 TIMES; MAKE IT SO ONLY CALLS ONCE!!!
+                        FirstPersonDeathBase.mls.LogInfo($"Ship is leaving; reverting to normal spectate!");
+
                         PlayerNames.Clear();
                         PlayerDecapitated = false;
 
@@ -177,6 +180,8 @@ namespace FirstPersonDeath.Patches
                         {
                             if (MaskedPlayerPatch.MaskedTransform)
                             {
+                                FirstPersonDeathBase.mls.LogInfo($"Spectating masked; disabling renderer!");
+
                                 MeshRenderer[] meshRenderers = MaskedPlayerPatch.MaskedTransform.root.gameObject.GetComponentsInChildren<MeshRenderer>();
 
                                 foreach (MeshRenderer renderer in meshRenderers)
@@ -194,8 +199,9 @@ namespace FirstPersonDeath.Patches
 
                             if (PlayerUnderwater)
                             {
+                                FirstPersonDeathBase.mls.LogInfo($"{PlayerUsername} is underwater!");
                                 HUDManager.Instance.setUnderwaterFilter = true;
-                            }
+                            } 
 
                             HUDManager.Instance.spectatingPlayerText.text = "";
                             StartOfRound.Instance.overrideSpectateCamera = true;
