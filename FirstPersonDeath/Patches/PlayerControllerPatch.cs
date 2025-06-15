@@ -133,7 +133,7 @@ namespace FirstPersonDeath.Patches
                                         {
                                             if (Rigidbody.name == "spine.004")
                                             {
-                                                FirstPersonDeathBase.mls.LogInfo($"Found head node of {DeadBodyInfo.name}!");
+                                                FirstPersonDeathBase.mls.LogInfo($"Found head node of {PlayerUsername}!");
                                                 CameraHolder = Rigidbody.gameObject;
                                             }
                                         }
@@ -155,7 +155,7 @@ namespace FirstPersonDeath.Patches
                                     {
                                         if (Rigidbody.name == "spine.004")
                                         {
-                                            FirstPersonDeathBase.mls.LogInfo($"Found head node of {DeadBodyInfo.name}!");
+                                            FirstPersonDeathBase.mls.LogInfo($"Found head node of {PlayerUsername}!");
                                             CameraHolder = Rigidbody.gameObject;
                                         }
                                     }
@@ -166,7 +166,7 @@ namespace FirstPersonDeath.Patches
                                         {
                                             bPlayerDecapitated = true;
                                             CameraHolder = DeadBodyInfo.detachedHeadObject.gameObject;
-                                            FirstPersonDeathBase.mls.LogInfo($"{DeadBodyInfo.name} was killed by coilhead!");
+                                            FirstPersonDeathBase.mls.LogInfo($"{PlayerUsername} was killed by coilhead!");
                                         }
                                     }
                                 }
