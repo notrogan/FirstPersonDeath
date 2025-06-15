@@ -78,6 +78,11 @@ namespace FirstPersonDeath.Patches
                             if (AllPlayers[i].playerUsername != PlayerUsername && !AllPlayers[i].playerUsername.Contains("Player #"))
                             {
                                 NetworkController.spectatedPlayerScript = AllPlayers[i];
+
+                                foreach (string s in AllPlayers[i].playerUsername.Split(' '))
+                                {
+                                    FirstPersonDeathBase.mls.LogInfo(s);
+                                }
                             }
                         }
                     }
