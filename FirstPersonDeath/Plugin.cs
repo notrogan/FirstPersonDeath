@@ -20,7 +20,7 @@ namespace FirstPersonDeath
         internal static ManualLogSource mls;
 
         public static ConfigEntry<string> SwapKey;
-        public static ConfigEntry<int> SwapTime;
+        public static ConfigEntry<float> SwapTime;
 
         void Awake()
         {
@@ -45,7 +45,7 @@ namespace FirstPersonDeath
         private void LoadConfigs()
         {
             SwapKey = Config.Bind("FirstPersonDeath", "SwapKey", "E", "Key used to toggle perspectives; Default binding may conflict with other mods");
-            SwapTime = Config.Bind("FirstPersonDeath", "SwapTime", 3, "How long to stay in first person; Set this to 0 to disable auto swap to spectate");
+            SwapTime = Config.Bind("FirstPersonDeath", "SwapTime", 3.95f, "How long to stay in first person; Set this to 0 to disable auto swap to spectate");
         }
     }
 }

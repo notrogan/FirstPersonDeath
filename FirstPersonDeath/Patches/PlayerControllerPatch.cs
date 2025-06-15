@@ -29,7 +29,9 @@ namespace FirstPersonDeath.Patches
         public static bool bPlayerUnderwater = false;
         public static bool bPlayerDecapitated = false;
 
-        public static bool bSetTimer = false;
+        public static bool bSetTimer = true;
+        public static float Timer = 0f;
+        public static float TimerDuration = FirstPersonDeathBase.SwapTime.Value;
 
         public static List<string> PlayerNames = new List<string>();
 
@@ -58,12 +60,24 @@ namespace FirstPersonDeath.Patches
                 if (!NetworkController.isPlayerDead)
                 {
                     bPlayerUnderwater = NetworkController.isUnderwater;
-
-
                 }
 
                 if (NetworkController.isPlayerDead)
                 {
+                    if (bSetTimer == true && !StartOfRound.Instance.shipIsLeaving)
+                    {
+                        Timer += Time.fixedDeltaTime / 6.5f;
+                    }
+
+                    if (Timer > TimerDuration && bSetTimer == true && !StartOfRound.Instance.shipIsLeaving)
+                    {
+                        Timer = 0f;
+                        bSetTimer = false;
+                        FirstPersonDeathBase.mls.LogInfo($"Timer for {PlayerUsername} expired!");
+
+                        KeyDownPatch.UsePlayerCamera = false;
+                    }
+
                     if (NetworkController.spectatedPlayerScript)
                     {
                         SpectatedPlayer = NetworkController.spectatedPlayerScript.playerUsername;
@@ -166,6 +180,7 @@ namespace FirstPersonDeath.Patches
                         FirstPersonDeathBase.mls.LogInfo($"Ship is leaving; reverting to normal spectate!");
 
                         PlayerNames.Clear();
+                        bSetTimer = true;
                         bPlayerDecapitated = false;
 
                         if (StartOfRound.Instance.allPlayersDead)
