@@ -25,9 +25,11 @@ namespace FirstPersonDeath.Patches
         public static string SpectatedPlayer;
         public static PlayerControllerB[] AllPlayers;
 
-        public static bool PlayerBody = true;
-        public static bool PlayerUnderwater = false;
-        public static bool PlayerDecapitated = false;
+        public static bool bPlayerBody = true;
+        public static bool bPlayerUnderwater = false;
+        public static bool bPlayerDecapitated = false;
+
+        public static bool bSetTimer = false;
 
         public static List<string> PlayerNames = new List<string>();
 
@@ -35,7 +37,7 @@ namespace FirstPersonDeath.Patches
         [HarmonyPostfix]
         public static void FirstPersonPatch()
         {
-            if (!PlayerBody && NetworkController.causeOfDeath != CauseOfDeath.Strangulation)
+            if (!bPlayerBody && NetworkController.causeOfDeath != CauseOfDeath.Strangulation)
             {
                 return;
             }
@@ -55,7 +57,9 @@ namespace FirstPersonDeath.Patches
 
                 if (!NetworkController.isPlayerDead)
                 {
-                    PlayerUnderwater = NetworkController.isUnderwater;
+                    bPlayerUnderwater = NetworkController.isUnderwater;
+
+
                 }
 
                 if (NetworkController.isPlayerDead)
@@ -141,7 +145,7 @@ namespace FirstPersonDeath.Patches
                                     {
                                         if (DeadBodyInfo.detachedHeadObject != null)
                                         {
-                                            PlayerDecapitated = true;
+                                            bPlayerDecapitated = true;
                                             CameraHolder = DeadBodyInfo.detachedHeadObject.gameObject;
                                             FirstPersonDeathBase.mls.LogInfo($"{DeadBodyInfo.name} was killed by coilhead!");
                                         }
@@ -157,7 +161,7 @@ namespace FirstPersonDeath.Patches
                         FirstPersonDeathBase.mls.LogInfo($"Ship is leaving; reverting to normal spectate!");
 
                         PlayerNames.Clear();
-                        PlayerDecapitated = false;
+                        bPlayerDecapitated = false;
 
                         if (StartOfRound.Instance.allPlayersDead)
                         {
@@ -197,7 +201,7 @@ namespace FirstPersonDeath.Patches
                                 }
                             }
 
-                            if (PlayerUnderwater)
+                            if (bPlayerUnderwater)
                             {
                                 FirstPersonDeathBase.mls.LogInfo($"{PlayerUsername} is underwater!");
                                 HUDManager.Instance.setUnderwaterFilter = true;
@@ -265,7 +269,7 @@ namespace FirstPersonDeath.Patches
                             SpectateCamera.transform.parent = CameraHolder.transform;
                             SpectateCamera.transform.localPosition = new Vector3(0, 0, 0.2f);
 
-                            if (!PlayerDecapitated)
+                            if (!bPlayerDecapitated)
                             {
                                 SpectateCamera.transform.localRotation = Quaternion.Euler(0, 0, 0);
                             }
@@ -277,7 +281,7 @@ namespace FirstPersonDeath.Patches
                         else
                         {
                             StartOfRound.Instance.overrideSpectateCamera = false;
-                            PlayerBody = false;
+                            bPlayerBody = false;
                             return;
                         }
                     }
