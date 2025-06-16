@@ -29,6 +29,9 @@ namespace FirstPersonDeath.Patches
         public static bool bPlayerUnderwater = false;
         public static bool bPlayerDecapitated = false;
 
+        public static bool bAcknowledgedLeaving = false;
+        public static bool bAcknowledgedUnderwater = false;
+
         public static bool bSetTimer = true;
         public static float Timer = 0f;
         public static float TimerDuration = FirstPersonDeathBase.SwapTime.Value;
@@ -59,6 +62,13 @@ namespace FirstPersonDeath.Patches
 
                 if (!NetworkController.isPlayerDead)
                 {
+                    if (bAcknowledgedLeaving == true || bAcknowledgedUnderwater == true)
+                    {
+                        FirstPersonDeathBase.mls.LogInfo($"Resetting acknowledgements for {PlayerUsername}!");
+                        bAcknowledgedLeaving = false;
+                        bAcknowledgedUnderwater = false;
+                    }
+
                     bPlayerUnderwater = NetworkController.isUnderwater;
                 }
 
@@ -176,8 +186,11 @@ namespace FirstPersonDeath.Patches
 
                     if (StartOfRound.Instance.shipIsLeaving)
                     {
-                        //TODO - THESE LOGS ALL CALL 100000 TIMES; MAKE IT SO ONLY CALLS ONCE!!!
-                        FirstPersonDeathBase.mls.LogInfo($"Ship is leaving; reverting to normal spectate!");
+                        if (bAcknowledgedLeaving == false)
+                        {
+                            FirstPersonDeathBase.mls.LogInfo($"Ship is leaving; reverting to normal spectate!");
+                            bAcknowledgedLeaving = true;
+                        }
 
                         PlayerNames.Clear();
                         bSetTimer = true;
@@ -223,7 +236,11 @@ namespace FirstPersonDeath.Patches
 
                             if (bPlayerUnderwater)
                             {
-                                FirstPersonDeathBase.mls.LogInfo($"{PlayerUsername} is underwater!");
+                                if (bAcknowledgedUnderwater == false)
+                                {
+                                    FirstPersonDeathBase.mls.LogInfo($"{PlayerUsername} is underwater!");
+                                    bAcknowledgedUnderwater = true;
+                                }
                                 HUDManager.Instance.setUnderwaterFilter = true;
                             } 
 
