@@ -29,7 +29,6 @@ namespace FirstPersonDeath.Patches
         public static bool bPlayerUnderwater = false;
         public static bool bPlayerDecapitated = false;
 
-        public static bool bAcknowledgedReset = false;
         public static bool bAcknowledgedLeaving = false;
         public static bool bAcknowledgedUnderwater = false;
 
@@ -50,8 +49,6 @@ namespace FirstPersonDeath.Patches
 
             if (GameNetworkManager.Instance.localPlayerController != null && GameNetworkManager.Instance.localPlayerController != null)
             {
-                bAcknowledgedReset = true;
-
                 RoundController = StartOfRound.Instance.localPlayerController;
                 NetworkController = GameNetworkManager.Instance.localPlayerController;
 
