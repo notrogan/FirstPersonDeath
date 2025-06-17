@@ -29,6 +29,7 @@ namespace FirstPersonDeath.Patches
         public static bool bPlayerUnderwater = false;
         public static bool bPlayerDecapitated = false;
 
+        public static bool bAcknowledgedReset = false;
         public static bool bAcknowledgedLeaving = false;
         public static bool bAcknowledgedUnderwater = false;
 
@@ -49,6 +50,8 @@ namespace FirstPersonDeath.Patches
 
             if (GameNetworkManager.Instance.localPlayerController != null && GameNetworkManager.Instance.localPlayerController != null)
             {
+                bAcknowledgedReset = true;
+
                 RoundController = StartOfRound.Instance.localPlayerController;
                 NetworkController = GameNetworkManager.Instance.localPlayerController;
 
@@ -81,6 +84,11 @@ namespace FirstPersonDeath.Patches
 
                     if (Timer > TimerDuration && bSetTimer == true && !StartOfRound.Instance.shipIsLeaving)
                     {
+                        if (TimerDuration == 0)
+                        {
+                            return;
+                        }
+
                         Timer = 0f;
                         bSetTimer = false;
                         FirstPersonDeathBase.mls.LogInfo($"Timer for {PlayerUsername} expired!");

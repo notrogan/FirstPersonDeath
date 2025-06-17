@@ -13,7 +13,6 @@ namespace FirstPersonDeath.Patches
 
         public static bool SwapKeyDown = false;
         public static bool UsePlayerCamera = false;
-        public static string LastSpectatedPlayer = "";
 
         [HarmonyPatch("Update")]
         [HarmonyPostfix]
