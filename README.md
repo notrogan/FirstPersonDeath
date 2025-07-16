@@ -25,4 +25,3 @@ Unsupported Mods:
 
 ### Support
 - GitHub Issues
-- rogan@notrogan.com
