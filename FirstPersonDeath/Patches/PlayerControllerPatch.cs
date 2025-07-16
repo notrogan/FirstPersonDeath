@@ -81,16 +81,14 @@ namespace FirstPersonDeath.Patches
 
                     if (Timer > TimerDuration && bSetTimer == true && !StartOfRound.Instance.shipIsLeaving)
                     {
-                        if (TimerDuration == 0)
+                        if (TimerDuration != 0)
                         {
-                            return;
+                            Timer = 0f;
+                            bSetTimer = false;
+                            FirstPersonDeathBase.mls.LogInfo($"Timer for {PlayerUsername} expired!");
+
+                            KeyDownPatch.UsePlayerCamera = false;
                         }
-
-                        Timer = 0f;
-                        bSetTimer = false;
-                        FirstPersonDeathBase.mls.LogInfo($"Timer for {PlayerUsername} expired!");
-
-                        KeyDownPatch.UsePlayerCamera = false;
                     }
 
                     if (NetworkController.spectatedPlayerScript)
