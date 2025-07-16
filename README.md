@@ -7,7 +7,7 @@ In situations when the body is not recoverable, the spectator camera will be use
 SwapKey:
 - Used to switch between perspectives, default bind is E
   
-Swap Time:
+SwapTime:
 - Time before switching to normal spectate, set to 0 to disable
 
 ### Compatibility
@@ -25,4 +25,3 @@ Unsupported Mods:
 
 ### Support
 - GitHub Issues
-- rogan@notrogan.com
