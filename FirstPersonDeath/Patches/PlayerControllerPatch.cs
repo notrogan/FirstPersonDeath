@@ -76,7 +76,7 @@ namespace FirstPersonDeath.Patches
                 {
                     if (bSetTimer == true && !StartOfRound.Instance.shipIsLeaving)
                     {
-                        Timer += Time.fixedDeltaTime / 6.5f;
+                        Timer += Time.fixedDeltaTime / 7.75f;
                     }
 
                     if (Timer > TimerDuration && bSetTimer == true && !StartOfRound.Instance.shipIsLeaving)

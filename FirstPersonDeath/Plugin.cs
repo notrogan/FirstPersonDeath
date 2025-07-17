@@ -11,7 +11,7 @@ namespace FirstPersonDeath
     {
         private const string modGUID = "rogan.FirstPersonDeath";
         private const string modName = "First Person Death";
-        private const string modVersion = "1.3.5";
+        private const string modVersion = "1.3.6";
 
         private readonly Harmony harmony = new Harmony(modGUID);
 
@@ -45,7 +45,7 @@ namespace FirstPersonDeath
         private void LoadConfigs()
         {
             SwapKey = Config.Bind("FirstPersonDeath", "SwapKey", "E", "Key used to toggle perspectives; Default binding may conflict with other mods");
-            SwapTime = Config.Bind("FirstPersonDeath", "SwapTime", 0f, "How long to stay in first person; Set this to 0 to disable auto swap to spectate");
+            SwapTime = Config.Bind("FirstPersonDeath", "SwapTime", 4f, "How long to stay in first person; Set this to 0 to disable auto swap to spectate");
         }
     }
 }
