@@ -26,6 +26,8 @@ namespace FirstPersonDeath.Patches
                     {
                         UsePlayerCamera = !UsePlayerCamera;
                         SwapKeyDown = true;
+
+                        FirstPersonDeathBase.mls.LogInfo($"switching to {UsePlayerCamera}");
                     }
                 }
                 else if (SwapKey.IsUp())

@@ -64,7 +64,7 @@ namespace FirstPersonDeath.Patches
                 {
                     if (bAcknowledgedLeaving == true || bAcknowledgedUnderwater == true)
                     {
-                        FirstPersonDeathBase.mls.LogInfo($"Resetting acknowledgements for {PlayerUsername}!");
+                        FirstPersonDeathBase.mls.LogInfo($"Resetting acknowledgements for {PlayerUsername}...");
                         bAcknowledgedLeaving = false;
                         bAcknowledgedUnderwater = false;
                     }
@@ -85,7 +85,7 @@ namespace FirstPersonDeath.Patches
                         {
                             Timer = 0f;
                             bSetTimer = false;
-                            FirstPersonDeathBase.mls.LogInfo($"Timer for {PlayerUsername} expired!");
+                            FirstPersonDeathBase.mls.LogInfo($"Timer for {PlayerUsername} expired...");
 
                             KeyDownPatch.UsePlayerCamera = false;
                         }
@@ -146,7 +146,7 @@ namespace FirstPersonDeath.Patches
                                         {
                                             if (Rigidbody.name == "spine.004")
                                             {
-                                                FirstPersonDeathBase.mls.LogInfo($"Found head node of {PlayerUsername}!");
+                                                FirstPersonDeathBase.mls.LogInfo($"Found head node of {PlayerUsername}...");
                                                 CameraHolder = Rigidbody.gameObject;
                                             }
                                         }
@@ -168,7 +168,7 @@ namespace FirstPersonDeath.Patches
                                     {
                                         if (Rigidbody.name == "spine.004")
                                         {
-                                            FirstPersonDeathBase.mls.LogInfo($"Found head node of {PlayerUsername}!");
+                                            FirstPersonDeathBase.mls.LogInfo($"Found head node of {PlayerUsername}...");
                                             CameraHolder = Rigidbody.gameObject;
                                         }
                                     }
@@ -191,7 +191,7 @@ namespace FirstPersonDeath.Patches
                     {
                         if (bAcknowledgedLeaving == false)
                         {
-                            FirstPersonDeathBase.mls.LogInfo($"Ship is leaving; reverting to normal spectate!");
+                            FirstPersonDeathBase.mls.LogInfo($"Ship is leaving; reverting to normal spectate...");
                             bAcknowledgedLeaving = true;
                         }
 
@@ -220,7 +220,7 @@ namespace FirstPersonDeath.Patches
                         {
                             if (MaskedPlayerPatch.MaskedTransform)
                             {
-                                FirstPersonDeathBase.mls.LogInfo($"Spectating masked; disabling renderer!");
+                                FirstPersonDeathBase.mls.LogInfo($"Spectating masked; disabling renderer...");
 
                                 MeshRenderer[] meshRenderers = MaskedPlayerPatch.MaskedTransform.root.gameObject.GetComponentsInChildren<MeshRenderer>();
 
@@ -251,6 +251,8 @@ namespace FirstPersonDeath.Patches
                             StartOfRound.Instance.overrideSpectateCamera = true;
                             AudioListener.gameObject.transform.parent = SpectateCamera.transform;
                             AudioListener.gameObject.transform.localPosition = new Vector3 (0, 0, 0);
+
+                            FirstPersonDeathBase.mls.LogInfo($"{PlayerUsername} is switching to first person camera...");
                         }
                         else
                         {
@@ -258,7 +260,7 @@ namespace FirstPersonDeath.Patches
                             {
                                 if (!script.playerUsername.Contains("Player #") && !PlayerNames.Contains(script.playerUsername))
                                 {
-                                    FirstPersonDeathBase.mls.LogInfo($"Added {script.playerUsername} to PlayerNames!");
+                                    FirstPersonDeathBase.mls.LogInfo($"Added {script.playerUsername} to PlayerNames...");
                                     PlayerNames.Add(script.playerUsername);
                                 }
                             }
@@ -297,6 +299,8 @@ namespace FirstPersonDeath.Patches
                             StartOfRound.Instance.overrideSpectateCamera = false;
                             AudioListener.gameObject.transform.parent = PivotCamera.transform;
                             AudioListener.gameObject.transform.localPosition = new Vector3(0, 0, 0);
+
+                            FirstPersonDeathBase.mls.LogInfo($"{PlayerUsername} is switching to pivot camera...");
                         }
 
                         if (CameraHolder)
